@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trade Journal — Trade Qeydiyyatı</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">▲</span>
+      <div>
+        <h1>Trade Journal</h1>
+        <p>Treyd qeydiyyatı və performans analizi</p>
+      </div>
+    </div>
+    <button id="openFormBtn" class="btn btn-primary">+ Yeni Trade</button>
+  </header>
+
+  <!-- Statistika kartları -->
+  <section class="stats" id="statsGrid">
+    <div class="stat-card"><span class="stat-label">Ümumi P&L</span><span class="stat-value" id="statPnl">—</span></div>
+    <div class="stat-card"><span class="stat-label">Win Rate</span><span class="stat-value" id="statWin">—</span></div>
+    <div class="stat-card"><span class="stat-label">Bağlı / Açıq</span><span class="stat-value" id="statCounts">—</span></div>
+    <div class="stat-card"><span class="stat-label">Profit Factor</span><span class="stat-value" id="statPf">—</span></div>
+  </section>
+
+  <!-- Filtr paneli -->
+  <section class="toolbar">
+    <div class="filters">
+      <button class="chip active" data-status="">Hamısı</button>
+      <button class="chip" data-status="OPEN">Açıq</button>
+      <button class="chip" data-status="CLOSED">Bağlı</button>
+    </div>
+    <input type="text" id="searchInput" class="search" placeholder="Simvol axtar (BTC, AAPL...)" />
+  </section>
+
+  <!-- Trade siyahısı -->
+  <main>
+    <div id="tradesList" class="trades-grid"></div>
+    <div id="emptyState" class="empty hidden">
+      <p>Hələ heç bir trade yoxdur.</p>
+      <button class="btn btn-primary" onclick="document.getElementById('openFormBtn').click()">İlk trade-i əlavə et</button>
+    </div>
+  </main>
+
+  <!-- Form modal -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h2 id="modalTitle">Yeni Trade</h2>
+        <button class="close" id="closeModal">✕</button>
+      </div>
+      <form id="tradeForm" enctype="multipart/form-data">
+        <input type="hidden" id="tradeId" name="id" />
+        <div class="grid-2">
+          <label>Simvol*<input type="text" name="symbol" id="symbol" placeholder="BTCUSDT" required /></label>
+          <label>İstiqamət
+            <select name="direction" id="direction">
+              <option value="LONG">LONG (Alış)</option>
+              <option value="SHORT">SHORT (Satış)</option>
+            </select>
+          </label>
+        </div>
+        <div class="grid-3">
+          <label>Giriş qiyməti*<input type="number" step="any" name="entry_price" id="entry_price" required /></label>
+          <label>Çıxış qiyməti<input type="number" step="any" name="exit_price" id="exit_price" /></label>
+          <label>Həcm (qty)<input type="number" step="any" name="quantity" id="quantity" value="1" /></label>
+        </div>
+        <div class="grid-3">
+          <label>Status
+            <select name="status" id="status">
+              <option value="OPEN">Açıq</option>
+              <option value="CLOSED">Bağlı</option>
+            </select>
+          </label>
+          <label>Tarix<input type="datetime-local" name="trade_date" id="trade_date" /></label>
+          <label>Strategiya<input type="text" name="strategy" id="strategy" placeholder="Breakout, Scalp..." /></label>
+        </div>
+        <label>Qeydlər<textarea name="notes" id="notes" rows="3" placeholder="Setup, hisslər, dərs..."></textarea></label>
+
+        <label class="file-label">Qrafik şəkli (chart screenshot)
+          <input type="file" name="image" id="image" accept="image/*" />
+        </label>
+        <div id="imagePreviewWrap" class="preview-wrap hidden">
+          <img id="imagePreview" alt="preview" />
+          <button type="button" id="removeImageBtn" class="btn btn-ghost small">Şəkli sil</button>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" id="cancelBtn">Ləğv et</button>
+          <button type="submit" class="btn btn-primary" id="saveBtn">Yadda saxla</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Şəkil böyütmə (lightbox) -->
+  <div id="lightbox" class="lightbox hidden"><img id="lightboxImg" alt="" /></div>
+
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
