@@ -17,7 +17,10 @@
         <p>Treyd qeydiyyatı və performans analizi</p>
       </div>
     </div>
-    <button id="openFormBtn" class="btn btn-primary">+ Yeni Trade</button>
+    <div class="top-actions">
+      <button id="themeToggle" class="btn btn-ghost icon-btn" title="Fon dəyiş (ağ/qara)">🌙</button>
+      <button id="openFormBtn" class="btn btn-primary">+ Yeni Trade</button>
+    </div>
   </header>
 
   <!-- Statistika kartları -->
@@ -55,6 +58,7 @@
         <button class="close" id="closeModal">✕</button>
       </div>
       <form id="tradeForm" enctype="multipart/form-data">
+        <div class="form-body">
         <input type="hidden" id="tradeId" name="id" />
         <div class="grid-2">
           <label>Simvol*<input type="text" name="symbol" id="symbol" placeholder="BTCUSDT" required /></label>
@@ -89,6 +93,7 @@
           <img id="imagePreview" alt="preview" />
           <button type="button" id="removeImageBtn" class="btn btn-ghost small">Şəkli sil</button>
         </div>
+        </div><!-- /.form-body -->
 
         <div class="modal-actions">
           <button type="button" class="btn btn-ghost" id="cancelBtn">Ləğv et</button>
