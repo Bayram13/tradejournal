@@ -211,5 +211,23 @@ el("searchInput").oninput = (e) => {
   searchTimer = setTimeout(() => { searchTerm = e.target.value; loadTrades(); }, 300);
 };
 
+// ---------- Tema (ağ / qara fon) ----------
+function applyTheme(theme) {
+  if (theme === "light") {
+    document.body.classList.add("light");
+    el("themeToggle").textContent = "☀️";
+  } else {
+    document.body.classList.remove("light");
+    el("themeToggle").textContent = "🌙";
+  }
+}
+const savedTheme = localStorage.getItem("tj_theme") || "dark";
+applyTheme(savedTheme);
+el("themeToggle").onclick = () => {
+  const next = document.body.classList.contains("light") ? "dark" : "light";
+  localStorage.setItem("tj_theme", next);
+  applyTheme(next);
+};
+
 // ---------- Başlat ----------
 loadTrades();
